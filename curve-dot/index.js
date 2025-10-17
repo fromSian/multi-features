@@ -48,8 +48,8 @@ const drawSpheres = () => {
     return {
       sphere: new Sphere({
         ctx,
-        x,
-        y,
+        x: 280,
+        y: 280,
         direction: "horizontal",
       }),
       dots,
@@ -72,6 +72,11 @@ const animate = () => {
     //     dot.draw();
     //   });
   });
+
+  // background_dots.forEach((bd) => {
+  //   bd.update({ x: 280, y: 280 });
+  //   bd.draw();
+  // });
 };
 
 const loop = () => {

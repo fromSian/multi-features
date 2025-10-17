@@ -18,10 +18,10 @@ const drawPoint = (x, y, radius, color) => {
 
 const generateDots = () => {
   dots = [];
-  Array.from({ length: 4 }).forEach((item, i) => {
+  Array.from({ length: 50 }).forEach((item, i) => {
     let x = Math.floor(Math.random() * WIDTH);
     let y = Math.floor(Math.random() * HEIGHT);
-    let radius = Math.floor(Math.random() * 100);
+    let radius = Math.floor(Math.random() * 30);
     if (i !== 0) {
       for (let j = 0; j < dots.length; j++) {
         let d = dots[j];
@@ -64,7 +64,14 @@ const generateDots = () => {
             // }
           });
       },
+      detectCursor(cursor) {
+        if (getDistance(this, cursor) <= 100 + this.radius) {
+          this.x = this.x + this.velocity.x * 100;
+          this.x = this.y + this.velocity.y * 100;
+        }
+      },
     };
+
     drawPoint(dot.x, dot.y, dot.radius, dot.color);
     dots.push(dot);
   });

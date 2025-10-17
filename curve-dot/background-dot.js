@@ -1,3 +1,4 @@
+import { getDistance } from "../collision/common.js";
 import {
   SPIN_DOT_CURVE_PATH_RADIUS,
   ANGLE,
@@ -13,7 +14,7 @@ export default class BackgroundDot {
 
   color;
 
-  angle = Math.PI / 2 - ANGLE / 2;
+  angle;
 
   center = {
     x: 0,
@@ -39,11 +40,6 @@ export default class BackgroundDot {
   spinCounterClockWise() {
     this.running = true;
 
-    this.center = {
-      x: this.ox - GAP * Math.sin(ANGLE / 2),
-      y: this.oy - GAP * Math.cos(ANGLE / 2),
-    };
-
     this.angle = this.angle - (1 * Math.PI) / 180;
     this.x = this.center.x + GAP * Math.cos(this.angle);
 
@@ -53,14 +49,31 @@ export default class BackgroundDot {
       this.running = false;
     }
   }
+  spinClockWise() {
+    this.running = true;
+    this.angle = this.angle + (1 * Math.PI) / 180;
+    this.x = this.center.x + GAP * Math.cos(this.angle);
+
+    this.y = this.center.y + GAP * Math.sin(this.angle);
+    if (this.angle > 2 * Math.PI - ANGLE) {
+      this.angle = Math.PI / 2 - ANGLE / 2;
+      this.running = false;
+    }
+  }
   update(center) {
     if (
-      (this.ox > center.x - SPIN_DOT_CURVE_PATH_RADIUS &&
-        this.ox < center.x + SPIN_DOT_PER_DEGREE &&
-        this.oy > center.y - SPIN_DOT_CURVE_PATH_RADIUS &&
-        this.oy < center.y + SPIN_DOT_CURVE_PATH_RADIUS) ||
+      getDistance({ x: this.ox, y: this.oy }, center) <
+        SPIN_DOT_CURVE_PATH_RADIUS + 3 + 6 ||
       this.running
     ) {
+      // 0 at the top, 1 at the bottom
+      let direction = this.oy <= center.y ? 0 : 1;
+      this.color = direction ? "blue" : "red";
+
+      if (!this.running) {
+        this.angle = (direction ? -1 : 1) * (Math.PI / 2 - ANGLE / 2);
+      }
+
       this.center = {
         x: this.ox - GAP * Math.sin(ANGLE / 2),
         y:
@@ -69,21 +82,13 @@ export default class BackgroundDot {
             : this.oy + GAP * Math.cos(ANGLE / 2),
       };
 
-      this.spinCounterClockWise();
+      // this.drawCenter();
+
+      direction ? this.spinClockWise() : this.spinCounterClockWise();
     } else {
+      this.color = "gray";
       //   this.x = this.ox - GAP;
       //   this.y = this.oy;
-    }
-
-    return;
-    if (
-      (this.x >= center.x - SPIN_DOT_CURVE_PATH_RADIUS &&
-        this.x <= center.x + SPIN_DOT_CURVE_PATH_RADIUS &&
-        this.y >= center.y - SPIN_DOT_CURVE_PATH_RADIUS &&
-        this.y <= center.y + SPIN_DOT_CURVE_PATH_RADIUS) ||
-      this.running
-    ) {
-    } else {
     }
   }
 

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .slider {
+        display: flex;
+        flex-direction: column;
+      }
+
+      input {
+        visibility: hidden;
+      }
+
+      .slider-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+      .slider-controls label {
+        position: relative;
+
+        width: 80px;
+        height: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+
+        background-color: gray;
+      }
+      .slider-controls label::after {
+        position: absolute;
+        content: "";
+
+        left: 0px;
+        width: 0px;
+        height: 100%;
+        border-radius: 4px;
+
+        background-color: skyblue;
+        transition: 0.5s;
+      }
+
+      #btn-1:checked ~ .slider-controls label[for="btn-1"]::after {
+        width: 50%;
+      }
+      #btn-2:checked ~ .slider-controls label[for="btn-2"]::after {
+        width: 50%;
+      }
+      #btn-3:checked ~ .slider-controls label[for="btn-3"]::after {
+        width: 50%;
+      }
+
+      .slider-cards {
+        display: flex;
+        overflow: hidden;
+        height: 40px;
+      }
+      .slider-cards-group {
+        display: flex;
+        flex: 0 0 600%;
+        transition: 3s;
+        animation: scroll 10s linear infinite;
+      }
+      @keyframes scroll {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .slider-card {
+        flex: 1;
+        transition: 3s;
+        /* opacity: 0; */
+      }
+
+      .slider-card:nth-child(2n + 1) {
+        background: rgb(137, 97, 97);
+      }
+      .slider-card:nth-child(2n) {
+        background: rgb(81, 81, 184);
+      }
+      .slider-card:nth-child(3n) {
+        background: rgb(117, 134, 117);
+      }
+
+      #btn-1:checked ~ .slider-cards .slider-cards-group {
+        transform: translateX(0%);
+      }
+
+      #btn-2:checked ~ .slider-cards .slider-cards-group {
+        transform: translateX(calc(-50% / 3));
+      }
+
+      #btn-3:checked ~ .slider-cards .slider-cards-group {
+        transform: translateX(calc(-100% / 3));
+      }
+      #btn-1:checked
+        ~ .slider-cards
+        .slider-cards-group
+        .slider-card[data-for="btn-1"] {
+        opacity: 1;
+      }
+      #btn-2:checked
+        ~ .slider-cards
+        .slider-cards-group
+        .slider-card[data-for="btn-2"] {
+        opacity: 1;
+      }
+      #btn-3:checked
+        ~ .slider-cards
+        .slider-cards-group
+        .slider-card[data-for="btn-3"] {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider">
+      <input type="radio" name="toggle" id="btn-1" checked />
+      <input type="radio" name="toggle" id="btn-2" />
+      <input type="radio" name="toggle" id="btn-3" />
+      <div class="slider-cards">
+        <div class="slider-cards-group">
+          <div class="slider-card" data-for="btn-1">1</div>
+          <div class="slider-card" data-for="btn-2">2</div>
+          <div class="slider-card" data-for="btn-3">3</div>
+          <div class="slider-card" data-for="btn-1">1</div>
+          <div class="slider-card" data-for="btn-2">2</div>
+          <div class="slider-card" data-for="btn-3">3</div>
+        </div>
+      </div>
+
+      <div class="slider-controls">
+        <label for="btn-1"> </label>
+        <label for="btn-2"> </label>
+        <label for="btn-3"> </label>
+      </div>
+    </div>
+  </body>
+</html>

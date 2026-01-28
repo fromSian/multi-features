@@ -19,9 +19,9 @@ const initial = () => {
 
   ctx = canvas.getContext("2d");
 
-  const size = Math.ceil(WIDTH / 20);
+  const size = Math.ceil(WIDTH / 40);
 
-  const x_loop = Array.from({ length: 20 });
+  const x_loop = Array.from({ length: 40 });
   const y_loop = Array.from({ length: Math.floor(HEIGHT / size) });
 
   x_loop.forEach((_, xi) => {

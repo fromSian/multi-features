@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+
+    <style>
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        padding: 16px;
+      }
+
+      .wrap {
+        column-count: 2;
+        /*欄數*/
+        column-gap: 16px;
+      }
+
+      .wrap > div {
+        display: flex;
+        margin-bottom: 16px;
+        break-inside: avoid;
+      }
+      .wrap > div:nth-child(n - 4) {
+        width: 133%;
+      }
+      .wrap > div:nth-child(n + 4) {
+        width: 66%;
+      }
+      .wrap > div:nth-child(2n + 1) {
+        /* width: calc((100% - 16px) / 3 * 2); */
+      }
+      .content {
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid gray;
+      }
+      .wrap_item_1 > .content {
+        background: wheat;
+      }
+      .wrap_item_2 > .content {
+        background: burlywood;
+      }
+      .wrap_item_3 > .content {
+        background: teal;
+      }
+      .wrap_item_4 > .content {
+        background: palegoldenrod;
+      }
+      .wrap_item_5 > .content {
+        background: firebrick;
+      }
+    </style>
+
+    <script>
+      const initial = () => {
+        const grid = document.getElementById("grid");
+        const allItems = document.querySelectorAll(".item");
+
+        const resizeGirdItem = (item) => {
+          const gridStyle = window.getComputedStyle(grid);
+          let rowHeight = parseInt(
+            gridStyle.getPropertyValue("grid-auto-rows")
+          );
+          let rowGap = parseInt(gridStyle.getPropertyValue("grid-row-gap"));
+
+          const rowSpan =
+            Math.ceil(
+              item.querySelector(".content").getBoundingClientRect().height
+            ) + 16;
+
+          item.style.gridRowEnd = `span ${rowSpan}`;
+        };
+        const resizeAllGridItems = () => {
+          allItems.forEach((ele) => {
+            resizeGirdItem(ele);
+          });
+        };
+        // resizeAllGridItems();
+
+        new Sortable(grid, {
+          animation: 150,
+          onChange() {
+            resizeAllGridItems();
+          },
+        });
+      };
+
+      window.onload = initial;
+    </script>
+  </head>
+  <body>
+    <div class="wrap" id="grid">
+      <div class="item wrap_item_1">
+        <div class="content">
+          0 Hello, I am Soto. MY Eye hurts now, so I am closing my eyes as well
+          as typing. How amazing am I, right! And I am feedivng cold now, I wnat
+          to wear 啊down coat, but I think it is too early to wear it, so just
+          wear three clothes to keep myself warm.
+        </div>
+      </div>
+      <div class="item wrap_item_2">
+        <div class="content">
+          1 Hello, I am Soto. MY Eye hurts now, so I am closing my eyes as well
+          as typing. How amazing am I, right! And I am feedivng cold now, I wnat
+          to wear 啊down coat, but I think it is too early to wear it, so just
+          wear three clothes to keep myself warm. Hello, I am Soto. MY Eye hurts
+          now, so I am closing my eyes as well as typing. How amazing am I,
+          right! And I am feedivng cold now, I wnat to wear 啊down coat, but I
+          think it is too early to wear it, so just wear three clothes to keep
+          myself warm. Hello, I am Soto. MY Eye hurts now, so I am closing my
+          eyes as well as typing. How amazing am I, right! And I am feedivng
+          cold now, I wnat to wear 啊down coat, but I think it is too early to
+          wear it, so just wear three clothes to keep myself warm.
+        </div>
+      </div>
+      <div class="item wrap_item_3">
+        <div class="content">
+          2 Hello, I am Soto. MY Eye hurts now, so I am closing my eyes as well
+          as typing. How amazing am I, right! And I am feedivng cold now, I wnat
+          to wear 啊down coat, but I think it is too early to wear it, so just
+          wear three clothes to keep myself warm. Hello, I am Soto. MY Eye hurts
+          now, so I am closing my eyes as well as typing. How amazing am I,
+          right! And I am feedivng cold now, I wnat to wear 啊down coat, but I
+          think it is too early to wear it, so just wear three clothes to keep
+          myself warm.
+        </div>
+      </div>
+      <div class="item wrap_item_4">
+        <div class="content">
+          3 Hello, I am Soto. MY Eye hurts now, so I am closing my eyes as well
+          as typing. How amazing am I, right! And I am feedivng cold now, I wnat
+          to wear 啊down coat, but I think it is too early to wear it, so just
+          wear three clothes to keep myself warm. Hello, I am Soto. MY Eye hurts
+          now, so I am closing my eyes as well as typing. How amazing am I,
+          right! And I am feedivng cold now, I wnat to wear 啊down coat, but I
+          think it is too early to wear it, so just wear three clothes to keep
+          myself warm. Hello, I am Soto. MY Eye hurts now, so I am closing my
+          eyes as well as typing. How amazing am I, right! And I am feedivng
+          cold now, I wnat to wear 啊down coat, but I think it is too early to
+          wear it, so just wear three clothes to keep myself warm. Hello, I am
+          Soto. MY Eye hurts now, so I am closing my eyes as well as typing. How
+          amazing am I, right! And I am feedivng cold now, I wnat to wear 啊down
+          coat, but I think it is too early to wear it, so just wear three
+          clothes to keep myself warm.
+        </div>
+      </div>
+
+      <div class="item wrap_item_5">
+        <div class="content">
+          4 Hello, I am Soto. MY Eye hurts now, so I am closing my eyes as well
+          as typing. How amazing am I, right! And I am feedivng cold now, I wnat
+          to wear 啊down coat, but I think it is too early to wear it, so just
+          wear three clothes to keep myself warm. I the end, I want to say that
+          I am hungry nowm I didn't eat too much this morning.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
